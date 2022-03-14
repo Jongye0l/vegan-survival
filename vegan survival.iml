@@ -10,14 +10,13 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../spigot-1.17.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../Bukkit/spigot-1.17.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../spigot-1.17.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../Bukkit/spigot-1.17.1.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="ActionBarAPI-1.5.4" level="project" />
   </component>
 </module>
