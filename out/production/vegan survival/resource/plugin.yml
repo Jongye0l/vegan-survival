@@ -1,6 +1,6 @@
 name: VeganSurvival
 main: com.Jongyeol.vegan.Main
-version: 0.1.0
+version: 1.1.0
 commands:
   vegan:
     description: 비건 수치를 수정합니다.
