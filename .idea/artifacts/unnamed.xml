@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="unnamed">
-    <output-path>$PROJECT_DIR$/server/plugins</output-path>
-    <root id="archive" name="unnamed.jar">
+    <output-path>$PROJECT_DIR$/../../TestServer/plugins</output-path>
+    <root id="archive" name="vegan-survival.jar">
       <element id="module-output" name="vegan survival" />
       <element id="dir-copy" path="$PROJECT_DIR$/src/resource" />
     </root>
