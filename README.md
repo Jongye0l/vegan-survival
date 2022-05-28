@@ -2,6 +2,8 @@
 ---
 ### 소개 Information
 비건 야생 플러그인입니다.
+고기를 먹을시 비건 수치가 오르며 비건수치에 따라 디버프가 존재합니다.
+비건 수치가 100이 되면 고기를 먹을 수 없게 됩니다.
 ---
 ### 사용 방법 How to use
 [이 링크](https://github.com/Jongye0l/vegan-survival/releases/latest) 에서 다운로드후 실행하시면 됩니다.
@@ -24,6 +26,9 @@
 * 비건 수치는 100을 넘지 못합니다.
 * 비건 수치가 100이 넘는다면 음식을 먹지 못합니다.
 ---
+### 안내 사항 Instructions
+* 위 프로젝트는 BSD 3-clause 라이선스를 가지고 있습니다.
+---
 ### 개발 환경 Development environment
 * Windows 10, Windows 11
 * IntelliJ IDEA 2021.3.2 (Community Edition)
@@ -36,3 +41,6 @@
 * Minecraft 1.17.1 Optifine
 * Spigot 1.18.2-R0.1-SNAPSHOT(3491-Spigot-b081915-95d233d)
 * Minecraft 1.18.2 Feather Client(2e45c687)
+---
+### 기여자 Contributors
+* Hi_Templar123 - 아이디어
