@@ -36,4 +36,3 @@
 * Minecraft 1.17.1 Optifine
 * Spigot 1.18.2-R0.1-SNAPSHOT(3491-Spigot-b081915-95d233d)
 * Minecraft 1.18.2 Feather Client(2e45c687)
-* 
