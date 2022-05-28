@@ -10,6 +10,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class addvegan {
     public static void Remove(Player player, PlayerItemConsumeEvent event, String text) {
+        if(player.getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(), "vegancancel"), PersistentDataType.INTEGER) != 0){
+            return;
+        }
         int vegan = player.getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER);
         if(vegan > 100){
             vegan = 100;

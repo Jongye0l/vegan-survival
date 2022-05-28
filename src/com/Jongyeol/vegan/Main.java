@@ -2,7 +2,7 @@ package com.Jongyeol.vegan;
 
 import com.Jongyeol.vegan.Command.vegan;
 import com.Jongyeol.vegan.Command.veganTabCompletion;
-import com.Jongyeol.vegan.Consumables.Item;
+import com.Jongyeol.vegan.Item.Item;
 import com.Jongyeol.vegan.Notification.madeby;
 import com.Jongyeol.vegan.actionbar.RepeatAction;
 import com.Jongyeol.vegan.death.respawn;

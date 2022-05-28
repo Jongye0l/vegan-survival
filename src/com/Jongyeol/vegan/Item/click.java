@@ -1,4 +1,4 @@
-package com.Jongyeol.vegan.Consumables;
+package com.Jongyeol.vegan.Item;
 
 import com.Jongyeol.vegan.Main;
 import com.Jongyeol.vegan.actionbar.begunaction;
@@ -24,10 +24,18 @@ public class click {
                 event.setCancelled(true);
                 Player player = event.getPlayer();
                 player.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER, 0);
-                int i = event.getItem().getAmount();
-                i--;
-                event.getItem().setAmount(i);
+                event.getItem().setAmount(event.getItem().getAmount() - 1);
                 player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 비건이 초기화되었습니다.");
+                begunaction.SendActionbar(player);
+            }
+            if(event.getItem().getItemMeta().equals(Item.Laxative.getItemMeta())) {
+                event.setCancelled(true);
+                Player player = event.getPlayer();
+                player.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER, 0);
+                player.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(), "vegancancel"), PersistentDataType.INTEGER, 300);
+                event.getItem().setAmount(event.getItem().getAmount() - 1);
+                player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 비건이 초기화되었습니다.");
+                player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 5분간 수치가 오르지 않습니다.");
                 begunaction.SendActionbar(player);
             }
         }

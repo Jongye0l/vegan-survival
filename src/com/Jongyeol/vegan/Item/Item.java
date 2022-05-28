@@ -1,4 +1,4 @@
-package com.Jongyeol.vegan.Consumables;
+package com.Jongyeol.vegan.Item;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -15,8 +15,10 @@ import java.util.List;
 
 public class Item {
     public static ItemStack Consumables;
+    public static ItemStack Laxative;
     public static void init() {
         createConsumables();
+        createLaxative();
     }
     public static void createConsumables() {
         ItemStack item = new ItemStack(Material.DEAD_BUSH, 1);
@@ -24,13 +26,13 @@ public class Item {
         meta.setDisplayName(ChatColor.AQUA + "비건 소모제");
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.YELLOW + "비건 수치를 제거해주는 아이템이다.");
-        lore.add(ChatColor.GREEN + "우클릭을 눌러 비건을 제거합니다.");
+        lore.add(ChatColor.GREEN + "우클릭을 눌러 아이템을 사용합니다.");
         meta.setLore(lore);
         meta.addEnchant(Enchantment.DURABILITY, 0, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
         Consumables = item;
-        ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("wand"), item);
+        ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("1"), item);
         sr.shape("ABC",
                  "DEF",
                  "GHI");
@@ -43,6 +45,29 @@ public class Item {
         sr.setIngredient('G', Material.GLOW_BERRIES);
         sr.setIngredient('H', Material.BAMBOO);
         sr.setIngredient('I', Material.ACACIA_SAPLING);
+        Bukkit.getServer().addRecipe(sr);
+    }
+    public static void createLaxative() {
+        ItemStack item = new ItemStack(Material.BIRCH_SAPLING, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.AQUA + "비건 완화제");
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.YELLOW + "비건 수치를 제거해주고 5분간 비건수치가 오르지 않게 해주는 아이템이다.");
+        lore.add(ChatColor.GREEN + "우클릭을 눌러 아이템을 사용합니다.");
+        meta.setLore(lore);
+        meta.addEnchant(Enchantment.DURABILITY, 0, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(meta);
+        Laxative = item;
+        ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("2"), item);
+        sr.shape("ABC",
+                "DEF",
+                "GHI");
+        sr.setIngredient('B', Material.BRAIN_CORAL);
+        sr.setIngredient('D', Material.GLOW_LICHEN);
+        sr.setIngredient('E', Material.NETHER_WART);
+        sr.setIngredient('F', Material.BLAZE_POWDER);
+        sr.setIngredient('H', Material.PRISMARINE_SHARD);
         Bukkit.getServer().addRecipe(sr);
     }
 }

@@ -14,5 +14,8 @@ public class JoinVegan {
         if(!player.getPersistentDataContainer().has(new NamespacedKey(Main.getPlugin(), "Vegan"), PersistentDataType.INTEGER)) {
             player.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER, 0);
         }
+        if(!player.getPersistentDataContainer().has(new NamespacedKey(Main.getPlugin(), "vegancancel"), PersistentDataType.INTEGER)) {
+            player.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(), "vegancancel"), PersistentDataType.INTEGER, 0);
+        }
     }
 }

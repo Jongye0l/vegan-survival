@@ -1,6 +1,5 @@
 package com.Jongyeol.vegan.debuf;
 
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;

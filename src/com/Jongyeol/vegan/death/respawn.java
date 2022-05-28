@@ -1,7 +1,6 @@
 package com.Jongyeol.vegan.death;
 
 import com.Jongyeol.vegan.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
