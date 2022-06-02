@@ -6,3 +6,4 @@ commands:
   vegan:
     description: 비건 수치를 수정합니다.
     usage: /vegan <set/show/add/remove/give> <player> <vegan/item>
+    permission: vegan.command
