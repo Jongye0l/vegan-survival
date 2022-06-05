@@ -36,11 +36,9 @@
 * Spigot 1.17.1(3240-Spigot-6c1c1b2-332335e)
 ---
 ### 테스트 환경 Test environment
-* Windows 10, Windows 11
-* Spigot 1.17.1(3240-Spigot-6c1c1b2-332335e)
-* Minecraft 1.17.1 Optifine
-* Spigot 1.18.2-R0.1-SNAPSHOT(3491-Spigot-b081915-95d233d)
-* Minecraft 1.18.2 Feather Client(2e45c687)
+* Windows 11
+* Spigot 1.18.2-R0.1-SNAPSHOT(3493-Spigot-b081915-pd46b56)
+* Minecraft 1.18.2 Feather Client(72c285f3)
 ---
 ### 기여자 Contributors
 * Hi_Templar123 - 아이디어
