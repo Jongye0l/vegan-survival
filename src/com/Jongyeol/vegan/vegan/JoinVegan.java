@@ -2,20 +2,23 @@ package com.Jongyeol.vegan.vegan;
 
 import com.Jongyeol.vegan.Main;
 import com.Jongyeol.vegan.actionbar.begunaction;
-import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.persistence.PersistentDataType;
 
 public class JoinVegan {
     public static void OnJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        FileConfiguration config = Main.getPlugin().getConfig();
+        if(!config.contains("Player.vegan." + event.getPlayer().getUniqueId())){
+            config.set("Player.vegan." + event.getPlayer().getUniqueId(), 0);
+            System.out.println(event.getPlayer().getUniqueId() + "(" + event.getPlayer().getName() + ")님에 비건이 생성되었습니다.");
+        }
+        if(!config.contains("Player.vegancancel." + event.getPlayer().getUniqueId())){
+            config.set("Player.vegancancel." + event.getPlayer().getUniqueId(), 0);
+            System.out.println(event.getPlayer().getUniqueId() + "(" + event.getPlayer().getName() + ")님에 비건(시간)이 생성되었습니다.");
+        }
         begunaction.SendActionbar(player);
-        if(!player.getPersistentDataContainer().has(new NamespacedKey(Main.getPlugin(), "Vegan"), PersistentDataType.INTEGER)) {
-            player.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER, 0);
-        }
-        if(!player.getPersistentDataContainer().has(new NamespacedKey(Main.getPlugin(), "vegancancel"), PersistentDataType.INTEGER)) {
-            player.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(), "vegancancel"), PersistentDataType.INTEGER, 0);
-        }
+        Main.getPlugin().saveConfig();
     }
 }

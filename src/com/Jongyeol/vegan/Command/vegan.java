@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -23,8 +24,10 @@ public class vegan implements CommandExecutor {
             Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " remove <player> <vegan>");
             Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " show <player>");
             Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " give <player> <item>");
+            //Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config");
             return true;
         }
+        FileConfiguration config = Main.getPlugin().getConfig();
         if(args[0].equals("set")) {
             if(args.length < 3) {
                 Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " set <player> <vegan>");
@@ -46,8 +49,8 @@ public class vegan implements CommandExecutor {
             if(vegan < 0){
                 vegan = 0;
             }
-            target.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER, vegan);
-            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + target.getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER) + " 로 정하였습니다.");
+            config.set("Player.vegan." + target.getUniqueId(), vegan);
+            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + vegan + " 로 정하였습니다.");
             begunaction.SendActionbar(target);
             return true;
         }
@@ -61,17 +64,20 @@ public class vegan implements CommandExecutor {
                 Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
                 return true;
             }
-            int vegan = target.getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER);
             if(NumberCheck.NumberCheck(args[2])){
                 Sender.sendMessage(ChatColor.RED + "숫자를 입력해주세요.");
                 return true;
             }
+            int vegan = config.getInt("Player.vegan." + target.getUniqueId());
             vegan += makenumber.makenumber(args[2]);
             if(vegan > 100){
                 vegan = 100;
             }
-            target.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER, vegan);
-            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + Integer.parseInt(args[2]) + " 추가하였습니다.");
+            if(vegan < 0){
+                vegan = 0;
+            }
+            config.set("Player.vegan." + target.getUniqueId(), vegan);
+            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + makenumber.makenumber(args[2]) + " 추가하였습니다.");
             begunaction.SendActionbar(target);
             return true;
         }
@@ -85,17 +91,20 @@ public class vegan implements CommandExecutor {
                 Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
                 return true;
             }
-            int vegan = target.getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER);
+            int vegan = config.getInt("Player.vegan." + target.getUniqueId());
             if(NumberCheck.NumberCheck(args[2])){
                 Sender.sendMessage(ChatColor.RED + "숫자를 입력해주세요.");
                 return true;
             }
             vegan -= makenumber.makenumber(args[2]);
+            if(vegan > 100){
+                vegan = 100;
+            }
             if(vegan < 0){
                 vegan = 0;
             }
-            target.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER, vegan);
-            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + Integer.parseInt(args[2]) + " 추가하였습니다.");
+            config.set("Player.vegan." + target.getUniqueId(), vegan);
+            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + makenumber.makenumber(args[2]) + " 제거하였습니다.");
             begunaction.SendActionbar(target);
             return true;
         }
@@ -132,19 +141,45 @@ public class vegan implements CommandExecutor {
                 Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
                 return true;
             }
-            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치 : " + target.getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(), "vegan"), PersistentDataType.INTEGER));
-            if(target.getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(), "vegancancel"), PersistentDataType.INTEGER) != 0){
-                int M = target.getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(), "vegancancel"), PersistentDataType.INTEGER) / 60;
-                int S = target.getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(), "vegancancel"), PersistentDataType.INTEGER) - M*60;
+            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치 : " + config.getInt("Player.vegan." + target.getUniqueId()));
+            int vegancancel = config.getInt("Player.vegancancel." + target.getUniqueId());
+            if(vegancancel != 0){
+                int M = vegancancel / 60;
+                int S = vegancancel - M*60;
                 Sender.sendMessage(ChatColor.GREEN + "비건 완화제 효과 발동중 : " + M + "분 " + S + "초 남음");
             }
             return true;
+        }
+        if(args[0].equals("config")) {
+            if(args.length < 2) {
+                Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config veganadd <number>");
+                Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config regenhealth <number>");
+                Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config regenresethungry <boolean>");
+                return true;
+            }
+            if(args[1].equals("veganadd")) {
+                if(args.length < 3) {
+                    Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config veganadd <number>");
+                    return true;
+                }
+                if(NumberCheck.NumberCheck(args[2])){
+                    Sender.sendMessage(ChatColor.RED + "숫자를 입력해주세요.");
+                    return true;
+                }
+                int i = makenumber.makenumber(args[2]);
+                //FileConfiguration config = plugin.getConfig();
+
+
+            }
+            return true;
+
         }
         Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " set <player> <vegan>");
         Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " add <player> <vegan>");
         Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " remove <player> <vegan>");
         Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " show <player>");
         Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " give <player> <item>");
+        //Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config");
         return true;
     }
 }

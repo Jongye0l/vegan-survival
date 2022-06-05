@@ -14,6 +14,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        saveDefaultConfig();
         getCommand("vegan").setExecutor(new vegan());;
         getCommand("vegan").setTabCompleter(new veganTabCompletion());
         getServer().getPluginManager().registerEvents(new respawn(this), this);

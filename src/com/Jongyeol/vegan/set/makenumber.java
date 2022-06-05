@@ -10,6 +10,9 @@ public class makenumber {
                     st = st + i2;
                 }
             }
+            if(strings[i1].equals("-")){
+                st = st + "-";
+            }
         }
         return Integer.parseInt(st);
     }
