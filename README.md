@@ -30,7 +30,7 @@
 * 위 프로젝트는 BSD 3-clause 라이선스를 가지고 있습니다.
 ---
 ### 개발 환경 Development environment
-* Windows 10, Windows 11
+* Windows 11
 * IntelliJ IDEA 2021.3.2 (Community Edition)
 * Oracle OpenJDK 17.0.2
 * Spigot 1.17.1(3240-Spigot-6c1c1b2-332335e)
