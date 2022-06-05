@@ -19,12 +19,12 @@ public class vegan implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender Sender, org.bukkit.command.Command command, String Cmd, String[] args) {
         if(args.length < 1) {
-            Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " set <player> <vegan>");
-            Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " add <player> <vegan>");
-            Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " remove <player> <vegan>");
-            Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " show <player>");
-            Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " give <player> <item>");
-            Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " set <player> <vegan>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " add <player> <vegan>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " remove <player> <vegan>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " show <player>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " give <player> <item>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " config");
             return true;
         }
         FileConfiguration config = Main.getPlugin().getConfig();
@@ -227,18 +227,18 @@ public class vegan implements CommandExecutor {
                 Main.getPlugin().saveConfig();
                 return true;
             }
-            Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config veganadd <number>");
-            Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config regenhealth <number>");
-            Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config regenresethungry <boolean>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " config veganadd <number>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " config regenhealth <number>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " config regenresethungry <boolean>");
             return true;
 
         }
-        Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " set <player> <vegan>");
-        Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " add <player> <vegan>");
-        Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " remove <player> <vegan>");
-        Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " show <player>");
-        Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " give <player> <item>");
-        Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config");
+        Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " set <player> <vegan>");
+        Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " add <player> <vegan>");
+        Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " remove <player> <vegan>");
+        Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " show <player>");
+        Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " give <player> <item>");
+        Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " config");
         return true;
     }
 }

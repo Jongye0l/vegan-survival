@@ -26,10 +26,11 @@ public class begunaction {
             if(vegan >= 90) { poison.poison(player); }
             if(vegan >= 100) { nausea.nausea(player); }
         } else {
-            vegancancel -= 1;
+            config.set("Player.vegancancel." + player.getUniqueId(), vegancancel - 1);
             int M = vegancancel / 60;
             int S = vegancancel - M*60;
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "비건 완화제 효과 : " + M + "분 " + S + "초 남음"));
+            Main.getPlugin().saveConfig();
         }
     }
 }

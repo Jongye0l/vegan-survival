@@ -19,13 +19,11 @@ public class click {
     }
     public static void OnRightClick(PlayerInteractEvent event) {
         FileConfiguration config = Main.getPlugin().getConfig();
-        int vegan = config.getInt("Player.vegan." + event.getPlayer().getUniqueId());
-        int vegancancel = config.getInt("Player.vegancancel." + event.getPlayer().getUniqueId());
         if(event.getItem() != null) {
             if(event.getItem().getItemMeta().equals(Item.Consumables.getItemMeta())) {
                 event.setCancelled(true);
                 Player player = event.getPlayer();
-                vegan = 0;
+                config.set("Player.vegan." + event.getPlayer().getUniqueId(), 0);
                 event.getItem().setAmount(event.getItem().getAmount() - 1);
                 player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 비건이 초기화되었습니다.");
                 begunaction.SendActionbar(player);
@@ -33,15 +31,14 @@ public class click {
             if(event.getItem().getItemMeta().equals(Item.Laxative.getItemMeta())) {
                 event.setCancelled(true);
                 Player player = event.getPlayer();
-                vegan = 0;
-                vegancancel = 300;
+                config.set("Player.vegan." + event.getPlayer().getUniqueId(), 0);
+                config.set("Player.vegancancel." + event.getPlayer().getUniqueId(), 300);
                 event.getItem().setAmount(event.getItem().getAmount() - 1);
                 player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 비건이 초기화되었습니다.");
                 player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 5분간 수치가 오르지 않습니다.");
                 begunaction.SendActionbar(player);
             }
-            config.set("Player.vegan" + event.getPlayer().getUniqueId(), vegan);
-            config.set("Player.vegancancel" + event.getPlayer().getUniqueId(), vegancancel);
+            Main.getPlugin().saveConfig();
         }
     }
 }

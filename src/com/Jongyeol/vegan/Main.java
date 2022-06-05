@@ -19,7 +19,7 @@ public class Main extends JavaPlugin {
         getCommand("vegan").setTabCompleter(new veganTabCompletion());
         getServer().getPluginManager().registerEvents(new respawn(this), this);
         BukkitTask RepeatAction = new RepeatAction().runTaskTimer(this, 0L, 20L);
-        BukkitTask madeby = new madeby().runTaskTimer(this, 0L, 36000L);
+        BukkitTask madeby = new madeby().runTaskTimer(this, 0L, 54000L);
         getServer().getPluginManager().registerEvents(new EventListener(), this);
         Item.init();
     }
