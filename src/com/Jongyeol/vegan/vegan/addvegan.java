@@ -12,6 +12,7 @@ public class addvegan {
         FileConfiguration config = Main.getPlugin().getConfig();
         int vegan = config.getInt("Player.vegan." + player.getUniqueId());
         int vegancancel = config.getInt("Player.vegancancel." + player.getUniqueId());
+        int veganadd = config.getInt("veganadd");
         if(vegancancel != 0){
             return;
         }
@@ -23,7 +24,7 @@ public class addvegan {
             event.setCancelled(true);
             return;
         }
-        vegan += 3;
+        vegan += veganadd;
         if(vegan > 100){
             vegan = 100;
         }

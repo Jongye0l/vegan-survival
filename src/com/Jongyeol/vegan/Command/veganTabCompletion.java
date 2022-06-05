@@ -10,8 +10,10 @@ import java.util.List;
 public class veganTabCompletion implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender Sender, Command command, String cmd, String[] args) {
-        String[] arg1g = "set add remove show give".split(" ");
-        String[] arg3g = "consumable laxative".split(" ");
+        String[] arg1g = "set add remove show give config".split(" ");
+        String[] configarg2g = "veganadd regenhealth regenresethungry".split(" ");
+        String[] booleanargg = "true yes ok positive 1 false no nope not denial 0".split(" ");
+        String[] givearg3g = "consumable laxative".split(" ");
         if (args.length == 1) {
             List<String> arg1 = new ArrayList<>();
             arg1.add("set");
@@ -19,7 +21,8 @@ public class veganTabCompletion implements TabCompleter {
             arg1.add("remove");
             arg1.add("show");
             arg1.add("give");
-            String[] arg1s = args[0].split("");
+            arg1.add("config");
+            String[] arg1s = args[0].toLowerCase().split("");
             if (arg1s[0].equals("")){
                 return arg1;
             }
@@ -36,8 +39,29 @@ public class veganTabCompletion implements TabCompleter {
             return arg1;
         }
         if (args.length == 2) {
+            if(args[0].toLowerCase().equals("config")) {
+                List<String> arg2 = new ArrayList<>();
+                arg2.add("veganadd");
+                arg2.add("regenhealth");
+                arg2.add("regenresethungry");
+                String[] arg2s = args[1].toLowerCase().split("");
+                if (arg2s[0].equals("")){
+                    return arg2;
+                }
+                for(int i1=0; i1 < configarg2g.length; i1++){
+                    String[] arg2b = configarg2g[i1].split("");
+                    for(int i2=0; i2 < arg2s.length; i2++){
+                        if (arg2s.length < arg2b.length){
+                            if (!arg2s[i2].equals(arg2b[i2])) {arg2.remove(configarg2g[i1]);}
+                        } else {
+                            arg2.remove(configarg2g[i1]);
+                        }
+                    }
+                }
+                return arg2;
+            }
             for(int i=0; i < arg1g.length; i++){
-                if(args[0].equals(arg1g[i])){
+                if(args[0].toLowerCase().equals(arg1g[i])){
                     return null;
                 }
             }
@@ -46,22 +70,52 @@ public class veganTabCompletion implements TabCompleter {
         }
         if (args.length == 3) {
             List<String> arg3 = new ArrayList<>();
-            if(args[0].equals("give")){
+            if(args[0].toLowerCase().equals("give")){
                 arg3.add("consumable");
                 arg3.add("laxative");
-                String[] arg3s = args[2].split("");
+                String[] arg3s = args[2].toLowerCase().split("");
                 if (arg3s[0].equals("")){
                     return arg3;
                 }
-                for(int i1=0; i1 < arg3g.length; i1++){
-                    String[] arg3b = arg3g[i1].split("");
+                for(int i1=0; i1 < givearg3g.length; i1++){
+                    String[] arg3b = givearg3g[i1].split("");
                     for(int i2=0; i2 < arg3s.length; i2++){
                         if (arg3s.length < arg3b.length){
-                            if (!arg3s[i2].equals(arg3b[i2])) {arg3.remove(arg3g[i1]);}
+                            if (!arg3s[i2].equals(arg3b[i2])) {arg3.remove(givearg3g[i1]);}
                         } else {
-                            arg3.remove(arg3g[i1]);
+                            arg3.remove(givearg3g[i1]);
                         }
                     }
+                }
+            }
+            if(args[0].toLowerCase().equals("config")){
+                if(args[1].toLowerCase().equals("regenresethungry")){
+                    arg3.add("true");
+                    arg3.add("false");
+                    String[] arg3s = args[2].toLowerCase().split("");
+                    if (arg3s[0].equals("")){
+                        return arg3;
+                    }
+                    arg3.add("yes");
+                    arg3.add("ok");
+                    arg3.add("positive");
+                    arg3.add("1");
+                    arg3.add("nope");
+                    arg3.add("not");
+                    arg3.add("no");
+                    arg3.add("denial");
+                    arg3.add("0");
+                    for(int i1=0; i1 < booleanargg.length; i1++){
+                        String[] arg3b = booleanargg[i1].split("");
+                        for(int i2=0; i2 < arg3s.length; i2++){
+                            if (arg3s.length < arg3b.length){
+                                if (!arg3s[i2].equals(arg3b[i2])) {arg3.remove(booleanargg[i1]);}
+                            } else {
+                                arg3.remove(booleanargg[i1]);
+                            }
+                        }
+                    }
+
                 }
             }
             return arg3;

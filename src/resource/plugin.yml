@@ -1,9 +1,9 @@
 name: VeganSurvival
 main: com.Jongyeol.vegan.Main
-version: 1.2.3
+version: 1.3.0
 api-version: 1.13
 commands:
   vegan:
     description: 비건 수치를 수정합니다.
-    usage: /vegan <set/show/add/remove/give> <player> <vegan/item>
+    usage: /vegan <set/show/add/remove/give/config>
     permission: vegan.command
