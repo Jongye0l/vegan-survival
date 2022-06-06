@@ -2,7 +2,7 @@ package com.Jongyeol.vegan.iff;
 
 public class BooleanCheck {
     public static boolean booleanCheck(String string) {
-        String[] customboolean = "true yes ok positive 1 false nope not denial 0".split(" ");
+        String[] customboolean = "true yes ok positive 1 on false nope not denial 0 off".split(" ");
         String[] args = string.toLowerCase().split("");
         Boolean test = true;
         for(int i1=0; i1 < customboolean.length; i1++){
