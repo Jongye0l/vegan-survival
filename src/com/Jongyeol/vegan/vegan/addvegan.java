@@ -1,11 +1,15 @@
 package com.Jongyeol.vegan.vegan;
 
 import com.Jongyeol.vegan.Main;
+import com.Jongyeol.vegan.actionbar.RepeatAction;
 import com.Jongyeol.vegan.actionbar.begunaction;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class addvegan {
     public static void Remove(Player player, PlayerItemConsumeEvent event, String text) {
@@ -32,5 +36,7 @@ public class addvegan {
         config.set("Player.vegan." + player.getUniqueId(), vegan);
         Main.getPlugin().saveConfig();
         begunaction.SendActionbar(player);
+        player.setNoDamageTicks(0);
+        BukkitTask Damage = new Damage(player).runTaskTimer(Main.getPlugin(), 0L, 1L);
     }
 }

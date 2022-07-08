@@ -38,6 +38,18 @@ public class click {
                 player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 5분간 수치가 오르지 않습니다.");
                 begunaction.SendActionbar(player);
             }
+            if(event.getItem().getItemMeta().equals(Item.SmallRemedy.getItemMeta())) {
+                event.setCancelled(true);
+                Player player = event.getPlayer();
+                int vegan = config.getInt("Player.vegan." + event.getPlayer().getUniqueId()) - 10;
+                if(vegan < 0){
+                    vegan = 0;
+                }
+                config.set("Player.vegan." + event.getPlayer().getUniqueId(), vegan);
+                event.getItem().setAmount(event.getItem().getAmount() - 1);
+                player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 비건이 10 줄었습니다.");
+                begunaction.SendActionbar(player);
+            }
             Main.getPlugin().saveConfig();
         }
     }

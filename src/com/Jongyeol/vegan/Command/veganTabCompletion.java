@@ -13,7 +13,7 @@ public class veganTabCompletion implements TabCompleter {
         String[] arg1g = "set add remove show give config".split(" ");
         String[] configarg2g = "veganadd regenhealth regenresethungry".split(" ");
         String[] booleanargg = "true yes ok positive 1 false no nope not denial 0".split(" ");
-        String[] givearg3g = "consumable laxative".split(" ");
+        String[] givearg3g = "consumable laxative SmallRemedy".split(" ");
         if (args.length == 1) {
             List<String> arg1 = new ArrayList<>();
             arg1.add("set");
@@ -73,6 +73,7 @@ public class veganTabCompletion implements TabCompleter {
             if(args[0].toLowerCase().equals("give")){
                 arg3.add("consumable");
                 arg3.add("laxative");
+                arg3.add("smallremedy");
                 String[] arg3s = args[2].toLowerCase().split("");
                 if (arg3s[0].equals("")){
                     return arg3;

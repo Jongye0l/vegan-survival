@@ -16,9 +16,11 @@ import java.util.List;
 public class Item {
     public static ItemStack Consumables;
     public static ItemStack Laxative;
+    public static ItemStack SmallRemedy;
     public static void init() {
         createConsumables();
         createLaxative();
+        createSmallRemedy();
     }
     public static void createConsumables() {
         ItemStack item = new ItemStack(Material.DEAD_BUSH, 1);
@@ -68,6 +70,33 @@ public class Item {
         sr.setIngredient('E', Material.NETHER_WART);
         sr.setIngredient('F', Material.BLAZE_POWDER);
         sr.setIngredient('H', Material.PRISMARINE_SHARD);
+        Bukkit.getServer().addRecipe(sr);
+    }
+    public static void createSmallRemedy() {
+        ItemStack item = new ItemStack(Material.HONEY_BOTTLE, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.AQUA + "비건 약식 치료제");
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.YELLOW + "비건 수치를 10 줄여주는 아이템이다.");
+        lore.add(ChatColor.GREEN + "우클릭을 눌러 아이템을 사용합니다.");
+        meta.setLore(lore);
+        meta.addEnchant(Enchantment.DURABILITY, 0, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(meta);
+        SmallRemedy = item;
+        ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("3"), item);
+        sr.shape("ABC",
+                "DEF",
+                "GHI");
+        sr.setIngredient('A', Material.MELON_SLICE);
+        sr.setIngredient('B', Material.IRON_INGOT);
+        sr.setIngredient('C', Material.CARROT);
+        sr.setIngredient('D', Material.SWEET_BERRIES);
+        sr.setIngredient('E', Material.HONEYCOMB);
+        sr.setIngredient('F', Material.POTATO);
+        sr.setIngredient('G', Material.BEETROOT);
+        sr.setIngredient('H', Material.GLASS_BOTTLE);
+        sr.setIngredient('I', Material.WHEAT);
         Bukkit.getServer().addRecipe(sr);
     }
 }

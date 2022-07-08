@@ -1,9 +1,7 @@
 package com.Jongyeol.vegan.actionbar;
 
 import com.Jongyeol.vegan.Main;
-import com.Jongyeol.vegan.debuf.hunger;
-import com.Jongyeol.vegan.debuf.nausea;
-import com.Jongyeol.vegan.debuf.poison;
+import com.Jongyeol.vegan.debuf.*;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -22,9 +20,10 @@ public class begunaction {
         }
         if(vegancancel == 0){
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.YELLOW + "비건 수치 : " + vegan));
-            if(vegan >= 80) { hunger.Hunger(player); }
-            if(vegan >= 90) { poison.poison(player); }
-            if(vegan >= 100) { nausea.nausea(player); }
+            if(vegan >= 70) { v70.effect(player); }
+            if(vegan >= 80) { v80.effect(player); }
+            if(vegan >= 90) { v90.effect(player); }
+            if(vegan >= 100) { v100.effect(player); }
         } else {
             config.set("Player.vegancancel." + player.getUniqueId(), vegancancel - 1);
             int M = vegancancel / 60;

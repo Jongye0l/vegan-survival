@@ -1,13 +1,11 @@
 package com.Jongyeol.vegan.Command;
 
+import com.Jongyeol.Library.CheckSet.CustomBoolean;
+import com.Jongyeol.Library.CheckSet.Number;
+import com.Jongyeol.Library.CheckSet.Other;
 import com.Jongyeol.vegan.Item.Item;
 import com.Jongyeol.vegan.Main;
 import com.Jongyeol.vegan.actionbar.begunaction;
-import com.Jongyeol.vegan.iff.BooleanCheck;
-import com.Jongyeol.vegan.iff.FoundPlayer;
-import com.Jongyeol.vegan.iff.NumberCheck;
-import com.Jongyeol.vegan.set.makeboolean;
-import com.Jongyeol.vegan.set.makenumber;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -34,15 +32,15 @@ public class vegan implements CommandExecutor {
                 return true;
             }
             Player target = Bukkit.getPlayer(args[1]);
-            if(FoundPlayer.FoundPlayer(target)){
+            if(!Other.playerCheck(target)){
                 Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
                 return true;
             }
-            if(NumberCheck.NumberCheck(args[2])){
+            if(Number.NumberCheck(args[2])){
                 Sender.sendMessage(ChatColor.RED + "숫자를 입력해주세요.");
                 return true;
             }
-            int vegan = makenumber.makenumber(args[2]);
+            int vegan = Number.makeinteger(args[2]);
             if(vegan > 100){
                 vegan = 100;
             }
@@ -61,16 +59,16 @@ public class vegan implements CommandExecutor {
                 return true;
             }
             Player target = Bukkit.getPlayer(args[1]);
-            if(FoundPlayer.FoundPlayer(target)){
+            if(!Other.playerCheck(target)){
                 Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
                 return true;
             }
-            if(NumberCheck.NumberCheck(args[2])){
+            if(Number.NumberCheck(args[2])){
                 Sender.sendMessage(ChatColor.RED + "숫자를 입력해주세요.");
                 return true;
             }
             int vegan = config.getInt("Player.vegan." + target.getUniqueId());
-            vegan += makenumber.makenumber(args[2]);
+            vegan += Number.makeinteger(args[2]);
             if(vegan > 100){
                 vegan = 100;
             }
@@ -79,7 +77,7 @@ public class vegan implements CommandExecutor {
             }
             config.set("Player.vegan." + target.getUniqueId(), vegan);
             Main.getPlugin().saveConfig();
-            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + makenumber.makenumber(args[2]) + " 추가하였습니다.");
+            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + Number.makeinteger(args[2]) + " 추가하였습니다.");
             begunaction.SendActionbar(target);
             return true;
         }
@@ -89,16 +87,16 @@ public class vegan implements CommandExecutor {
                 return true;
             }
             Player target = Bukkit.getPlayer(args[1]);
-            if(FoundPlayer.FoundPlayer(target)){
+            if(!Other.playerCheck(target)){
                 Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
                 return true;
             }
             int vegan = config.getInt("Player.vegan." + target.getUniqueId());
-            if(NumberCheck.NumberCheck(args[2])){
+            if(Number.NumberCheck(args[2])){
                 Sender.sendMessage(ChatColor.RED + "숫자를 입력해주세요.");
                 return true;
             }
-            vegan -= makenumber.makenumber(args[2]);
+            vegan -= Number.makeinteger(args[2]);
             if(vegan > 100){
                 vegan = 100;
             }
@@ -107,7 +105,7 @@ public class vegan implements CommandExecutor {
             }
             config.set("Player.vegan." + target.getUniqueId(), vegan);
             Main.getPlugin().saveConfig();
-            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + makenumber.makenumber(args[2]) + " 제거하였습니다.");
+            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + Number.makeinteger(args[2]) + " 제거하였습니다.");
             begunaction.SendActionbar(target);
             return true;
         }
@@ -117,7 +115,7 @@ public class vegan implements CommandExecutor {
                 return true;
             }
             Player target = Bukkit.getPlayer(args[1]);
-            if(FoundPlayer.FoundPlayer(target)){
+            if(!Other.playerCheck(target)){
                 Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
                 return true;
             }
@@ -131,8 +129,13 @@ public class vegan implements CommandExecutor {
                 Sender.sendMessage(ChatColor.AQUA + target.getName() + "에게 비건완화제를 주었습니다.");
                 return true;
             }
+            if(args[2].toLowerCase().equals("smallremedy")){
+                target.getInventory().addItem(Item.SmallRemedy);
+                Sender.sendMessage(ChatColor.AQUA + target.getName() + "에게 비건 약식 치료제를 주었습니다.");
+                return true;
+            }
             Sender.sendMessage(ChatColor.RED + "알 수 없는 아이템 입니다.");
-            Sender.sendMessage(ChatColor.GREEN + "아이템 종류 : consumable, laxative");
+            Sender.sendMessage(ChatColor.GREEN + "아이템 종류 : consumable, laxative, smallremedy");
             return true;
         }
         if(args[0].toLowerCase().equals("show")) {
@@ -140,7 +143,7 @@ public class vegan implements CommandExecutor {
                 Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " show <player>");
             }
             Player target = Bukkit.getPlayer(args[1]);
-            if(FoundPlayer.FoundPlayer(target)){
+            if(!Other.playerCheck(target)){
                 Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
                 return true;
             }
@@ -166,11 +169,11 @@ public class vegan implements CommandExecutor {
                     Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config veganadd <number>");
                     return true;
                 }
-                if(NumberCheck.NumberCheck(args[2])){
+                if(Number.NumberCheck(args[2])){
                     Sender.sendMessage(ChatColor.RED + "숫자를 입력해주세요.");
                     return true;
                 }
-                int i = makenumber.makenumber(args[2]);
+                int i = Number.makeinteger(args[2]);
                 if(i < 0){
                     Sender.sendMessage(ChatColor.RED + "0 이상의 값을 적어주세요.");
                     return true;
@@ -188,11 +191,11 @@ public class vegan implements CommandExecutor {
                     Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config regenhealth <number>");
                     return true;
                 }
-                if(NumberCheck.NumberCheck(args[2])){
+                if(Number.NumberCheck(args[2])){
                     Sender.sendMessage(ChatColor.RED + "숫자를 입력해주세요.");
                     return true;
                 }
-                int i = makenumber.makenumber(args[2]);
+                int i = Number.makeinteger(args[2]);
                 if(i < 1){
                     Sender.sendMessage(ChatColor.RED + "1 이상의 값을 적어주세요.");
                     return true;
@@ -210,11 +213,11 @@ public class vegan implements CommandExecutor {
                     Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " config regenresethungry <boolean>");
                     return true;
                 }
-                if(BooleanCheck.booleanCheck(args[2].toLowerCase())) {
+                if(CustomBoolean.booleanCheck(args[2].toLowerCase())) {
                     Sender.sendMessage(ChatColor.RED + "True/false를 입력해주세요.");
                     return true;
                 }
-                boolean Boolean = makeboolean.makeboolean(args[2].toLowerCase());
+                boolean Boolean = CustomBoolean.makeboolean(args[2].toLowerCase());
                 if(Boolean) {
                     Sender.sendMessage(ChatColor.GREEN + "리스폰시 배고픔 초기화를 활성화했습니다.");
                 } else {
