@@ -8,7 +8,7 @@ public class RepeatAction extends BukkitRunnable {
     @Override
     public void run() {
         for(Player player : Bukkit.getOnlinePlayers()) {
-            begunaction.SendActionbar(player);
+            Begunaction.SendActionbar(player);
         }
     }
 }

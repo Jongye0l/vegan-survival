@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Damage extends BukkitRunnable {
-    private Player player;
+    private final Player player;
     int i = 0;
     @Override
     public void run() {

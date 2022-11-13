@@ -1,14 +1,14 @@
 package com.Jongyeol.vegan.Item;
 
 import com.Jongyeol.vegan.Main;
-import com.Jongyeol.vegan.actionbar.begunaction;
+import com.Jongyeol.vegan.actionbar.Begunaction;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class click {
+public class Click {
     public static void OnClick(PlayerInteractEvent event) {
         if(event.getAction() == Action.RIGHT_CLICK_AIR) {
             OnRightClick(event);
@@ -26,7 +26,7 @@ public class click {
                 config.set("Player.vegan." + event.getPlayer().getUniqueId(), 0);
                 event.getItem().setAmount(event.getItem().getAmount() - 1);
                 player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 비건이 초기화되었습니다.");
-                begunaction.SendActionbar(player);
+                Begunaction.SendActionbar(player);
             }
             if(event.getItem().getItemMeta().equals(Item.Laxative.getItemMeta())) {
                 event.setCancelled(true);
@@ -36,7 +36,7 @@ public class click {
                 event.getItem().setAmount(event.getItem().getAmount() - 1);
                 player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 비건이 초기화되었습니다.");
                 player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 5분간 수치가 오르지 않습니다.");
-                begunaction.SendActionbar(player);
+                Begunaction.SendActionbar(player);
             }
             if(event.getItem().getItemMeta().equals(Item.SmallRemedy.getItemMeta())) {
                 event.setCancelled(true);
@@ -48,7 +48,7 @@ public class click {
                 config.set("Player.vegan." + event.getPlayer().getUniqueId(), vegan);
                 event.getItem().setAmount(event.getItem().getAmount() - 1);
                 player.sendMessage(ChatColor.AQUA + "아이템을 사용하여 비건이 10 줄었습니다.");
-                begunaction.SendActionbar(player);
+                Begunaction.SendActionbar(player);
             }
             Main.getPlugin().saveConfig();
         }

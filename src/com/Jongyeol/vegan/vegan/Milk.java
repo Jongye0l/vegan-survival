@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Milk {
-    public static void Milk(PlayerItemConsumeEvent event){
+    public static void milk(PlayerItemConsumeEvent event){
         Player player = event.getPlayer();
         event.setCancelled(true);
         if(!player.getGameMode().equals(GameMode.CREATIVE)){

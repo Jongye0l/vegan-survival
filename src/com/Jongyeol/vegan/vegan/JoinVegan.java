@@ -1,7 +1,8 @@
 package com.Jongyeol.vegan.vegan;
 
 import com.Jongyeol.vegan.Main;
-import com.Jongyeol.vegan.actionbar.begunaction;
+import com.Jongyeol.vegan.actionbar.Begunaction;
+import com.Jongyeol.vegan.hunger.Hunger;
 import com.Jongyeol.vegan.noteat.NotEat;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -17,10 +18,9 @@ public class JoinVegan {
             config.set("Player.vegancancel." + event.getPlayer().getUniqueId(), 0);
             System.out.println(event.getPlayer().getUniqueId() + "(" + event.getPlayer().getName() + ")님에 비건(시간)이 생성되었습니다.");
         }
-        if(!config.contains("Player.lastEat." + event.getPlayer().getUniqueId())){
-            NotEat.setEat(event.getPlayer());
-        }
-        begunaction.SendActionbar(event.getPlayer());
+        if(!config.contains("Player.lastEat." + event.getPlayer().getUniqueId())) NotEat.setEat(event.getPlayer());
+        if(!config.contains("Player.hunger." + event.getPlayer().getUniqueId())) Hunger.Resethunger(event.getPlayer());
+        Begunaction.SendActionbar(event.getPlayer());
         Main.getPlugin().saveConfig();
     }
 }

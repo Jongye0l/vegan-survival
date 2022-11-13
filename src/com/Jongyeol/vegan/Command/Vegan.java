@@ -5,7 +5,7 @@ import com.Jongyeol.Library.CheckSet.Number;
 import com.Jongyeol.Library.CheckSet.Other;
 import com.Jongyeol.vegan.Item.Item;
 import com.Jongyeol.vegan.Main;
-import com.Jongyeol.vegan.actionbar.begunaction;
+import com.Jongyeol.vegan.actionbar.Begunaction;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-public class vegan implements CommandExecutor {
+public class Vegan implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender Sender, org.bukkit.command.Command command, String Cmd, String[] args) {
         if(args.length < 1) {
@@ -50,7 +50,7 @@ public class vegan implements CommandExecutor {
             config.set("Player.vegan." + target.getUniqueId(), vegan);
             Main.getPlugin().saveConfig();
             Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + vegan + " 로 정하였습니다.");
-            begunaction.SendActionbar(target);
+            Begunaction.SendActionbar(target);
             return true;
         }
         if(args[0].toLowerCase().equals("add")) {
@@ -69,16 +69,12 @@ public class vegan implements CommandExecutor {
             }
             int vegan = config.getInt("Player.vegan." + target.getUniqueId());
             vegan += Number.makeinteger(args[2]);
-            if(vegan > 100){
-                vegan = 100;
-            }
-            if(vegan < 0){
-                vegan = 0;
-            }
+            if(vegan > 100) vegan = 100;
+            if(vegan < 0) vegan = 0;
             config.set("Player.vegan." + target.getUniqueId(), vegan);
             Main.getPlugin().saveConfig();
             Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + Number.makeinteger(args[2]) + " 추가하였습니다.");
-            begunaction.SendActionbar(target);
+            Begunaction.SendActionbar(target);
             return true;
         }
         if(args[0].toLowerCase().equals("remove")) {
@@ -97,16 +93,12 @@ public class vegan implements CommandExecutor {
                 return true;
             }
             vegan -= Number.makeinteger(args[2]);
-            if(vegan > 100){
-                vegan = 100;
-            }
-            if(vegan < 0){
-                vegan = 0;
-            }
+            if(vegan > 100) vegan = 100;
+            if(vegan < 0) vegan = 0;
             config.set("Player.vegan." + target.getUniqueId(), vegan);
             Main.getPlugin().saveConfig();
             Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + Number.makeinteger(args[2]) + " 제거하였습니다.");
-            begunaction.SendActionbar(target);
+            Begunaction.SendActionbar(target);
             return true;
         }
         if(args[0].toLowerCase().equals("give")) {
@@ -141,6 +133,7 @@ public class vegan implements CommandExecutor {
         if(args[0].toLowerCase().equals("show")) {
             if(args.length < 2) {
                 Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " show <player>");
+                return true;
             }
             Player target = Bukkit.getPlayer(args[1]);
             if(!Other.playerCheck(target)){
