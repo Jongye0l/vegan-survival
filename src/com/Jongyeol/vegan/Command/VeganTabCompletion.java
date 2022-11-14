@@ -2,6 +2,7 @@ package com.Jongyeol.vegan.Command;
 
 import com.Jongyeol.Library.CheckSet.CommandComplete;
 import com.Jongyeol.Library.CheckSet.CustomBoolean;
+import com.Jongyeol.Library.CheckSet.Other;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -21,14 +22,16 @@ public class VeganTabCompletion implements TabCompleter {
         argument1.add("config");
         if (args.length == 1) return CommandComplete.getCompleteList(argument1, args[0]);
         if (args.length == 2) {
-            if(args[0].toLowerCase().equals("config")) {
-                List<String> argument = new ArrayList<>();
-                argument.add("veganadd");
-                argument.add("regenhealth");
-                argument.add("regenresethungry");
-                return CommandComplete.getCompleteList(argument, args[1]);
+            switch(args[0].toLowerCase()) {
+                case "config":
+                    List<String> argument = new ArrayList<>();
+                    argument.add("veganadd");
+                    argument.add("regenhealth");
+                    argument.add("regenresethungry");
+                    return CommandComplete.getCompleteList(argument, args[1]);
+                case "give": return null;
+                case "add", "set", "remove", "show": return CommandComplete.getCompleteList(Other.getOfflinePlayersName(), args[1]);
             }
-            for(String st : argument1) if(args[0].toLowerCase().equals(st)) return null;
             return new ArrayList<>();
         }
         if (args.length == 3) {

@@ -3,11 +3,14 @@ package com.Jongyeol.vegan.Command;
 import com.Jongyeol.Library.CheckSet.CustomBoolean;
 import com.Jongyeol.Library.CheckSet.Number;
 import com.Jongyeol.Library.CheckSet.Other;
+import com.Jongyeol.Library.notification.CommandNotification;
+import com.Jongyeol.Library.prefix.Prefix;
 import com.Jongyeol.vegan.Item.Item;
 import com.Jongyeol.vegan.Main;
 import com.Jongyeol.vegan.actionbar.Begunaction;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,10 +20,10 @@ public class Vegan implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender Sender, org.bukkit.command.Command command, String Cmd, String[] args) {
         if(args.length < 1) {
-            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " set <player> <vegan>");
-            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " add <player> <vegan>");
-            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " remove <player> <vegan>");
-            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " show <player>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " set <offlinePlayer> <vegan>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " add <offlinePlayer> <vegan>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " remove <offlinePlayer> <vegan>");
+            Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " show <offlinePlayer>");
             Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " give <player> <item>");
             Sender.sendMessage(ChatColor.GREEN + "사용법 : /" + Cmd + " config");
             return true;
@@ -28,13 +31,16 @@ public class Vegan implements CommandExecutor {
         FileConfiguration config = Main.getPlugin().getConfig();
         if(args[0].toLowerCase().equals("set")) {
             if(args.length < 3) {
-                Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " set <player> <vegan>");
+                Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " set <offlinePlayer> <vegan>");
                 return true;
             }
-            Player target = Bukkit.getPlayer(args[1]);
-            if(!Other.playerCheck(target)){
-                Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
-                return true;
+            OfflinePlayer target = Bukkit.getPlayer(args[1]);
+            if(!Other.playerCheck((Player) target)){
+                target = Other.getOfflinePlayer(args[1]);
+                if(target == null) {
+                    Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
+                    return true;
+                }
             }
             if(Number.NumberCheck(args[2])){
                 Sender.sendMessage(ChatColor.RED + "숫자를 입력해주세요.");
@@ -49,19 +55,23 @@ public class Vegan implements CommandExecutor {
             }
             config.set("Player.vegan." + target.getUniqueId(), vegan);
             Main.getPlugin().saveConfig();
-            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + vegan + " 로 정하였습니다.");
-            Begunaction.SendActionbar(target);
+            Sender.sendMessage(Prefix.getPrefix(target) + target.getName() + ChatColor.AQUA + "의 비건수치를 " + vegan + " 로 설정하였습니다.");
+            CommandNotification.CommandNoti("vegan.command", target.getName() + "의 비건수치를 " + vegan + " 로 설정하였습니다.", Sender);
+            if(target.isOnline()) Begunaction.SendActionbar((Player) target);
             return true;
         }
         if(args[0].toLowerCase().equals("add")) {
             if(args.length < 3) {
-                Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " add <player> <vegan>");
+                Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " add <offlinePlayer> <vegan>");
                 return true;
             }
-            Player target = Bukkit.getPlayer(args[1]);
-            if(!Other.playerCheck(target)){
-                Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
-                return true;
+            OfflinePlayer target = Bukkit.getPlayer(args[1]);
+            if(!Other.playerCheck((Player) target)){
+                target = Other.getOfflinePlayer(args[1]);
+                if(target == null) {
+                    Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
+                    return true;
+                }
             }
             if(Number.NumberCheck(args[2])){
                 Sender.sendMessage(ChatColor.RED + "숫자를 입력해주세요.");
@@ -73,8 +83,9 @@ public class Vegan implements CommandExecutor {
             if(vegan < 0) vegan = 0;
             config.set("Player.vegan." + target.getUniqueId(), vegan);
             Main.getPlugin().saveConfig();
-            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + Number.makeinteger(args[2]) + " 추가하였습니다.");
-            Begunaction.SendActionbar(target);
+            Sender.sendMessage(Prefix.getPrefix(target) + target.getName() + ChatColor.AQUA + "의 비건수치를 " + Number.makeinteger(args[2]) + " 추가하였습니다.");
+            CommandNotification.CommandNoti("vegan.command", target.getName() + "의 비건수치를 " + Number.makeinteger(args[2]) + " 추가하였습니다.", Sender);
+            if(target.isOnline()) Begunaction.SendActionbar((Player) target);
             return true;
         }
         if(args[0].toLowerCase().equals("remove")) {
@@ -82,10 +93,13 @@ public class Vegan implements CommandExecutor {
                 Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " remove <player> <vegan>");
                 return true;
             }
-            Player target = Bukkit.getPlayer(args[1]);
-            if(!Other.playerCheck(target)){
-                Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
-                return true;
+            OfflinePlayer target = Bukkit.getPlayer(args[1]);
+            if(!Other.playerCheck((Player) target)){
+                target = Other.getOfflinePlayer(args[1]);
+                if(target == null) {
+                    Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
+                    return true;
+                }
             }
             int vegan = config.getInt("Player.vegan." + target.getUniqueId());
             if(Number.NumberCheck(args[2])){
@@ -97,8 +111,9 @@ public class Vegan implements CommandExecutor {
             if(vegan < 0) vegan = 0;
             config.set("Player.vegan." + target.getUniqueId(), vegan);
             Main.getPlugin().saveConfig();
-            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치를 " + Number.makeinteger(args[2]) + " 제거하였습니다.");
-            Begunaction.SendActionbar(target);
+            Sender.sendMessage( Prefix.getPrefix(target) + target.getName() + ChatColor.AQUA + "의 비건수치를 " + Number.makeinteger(args[2]) + " 제거하였습니다.");
+            CommandNotification.CommandNoti("vegan.command", target.getName() + "의 비건수치를 " + Number.makeinteger(args[2]) + " 제거하였습니다.", Sender);
+            if(target.isOnline()) Begunaction.SendActionbar((Player) target);
             return true;
         }
         if(args[0].toLowerCase().equals("give")) {
@@ -113,17 +128,20 @@ public class Vegan implements CommandExecutor {
             }
             if(args[2].toLowerCase().equals("consumable")){
                 target.getInventory().addItem(Item.Consumables);
-                Sender.sendMessage(ChatColor.AQUA + target.getName() + "에게 비건소모제를 주었습니다.");
+                Sender.sendMessage(Prefix.getPrefix(target) + target.getName() + ChatColor.AQUA + "에게 비건소모제를 주었습니다.");
+                CommandNotification.CommandNoti("vegan.command", target.getName() + "에게 비건소모제를 주었습니다.", Sender);
                 return true;
             }
             if(args[2].toLowerCase().equals("laxative")){
                 target.getInventory().addItem(Item.Laxative);
-                Sender.sendMessage(ChatColor.AQUA + target.getName() + "에게 비건완화제를 주었습니다.");
+                Sender.sendMessage(Prefix.getPrefix(target) + target.getName() + ChatColor.AQUA + "에게 비건완화제를 주었습니다.");
+                CommandNotification.CommandNoti("vegan.command", target.getName() + "에게 비건완화제를 주었습니다.", Sender);
                 return true;
             }
             if(args[2].toLowerCase().equals("smallremedy")){
                 target.getInventory().addItem(Item.SmallRemedy);
-                Sender.sendMessage(ChatColor.AQUA + target.getName() + "에게 비건 약식 치료제를 주었습니다.");
+                Sender.sendMessage(Prefix.getPrefix(target) + target.getName() + ChatColor.AQUA + "에게 비건 약식 치료제를 주었습니다.");
+                CommandNotification.CommandNoti("vegan.command", target.getName() + "에게 비건 약식 치료제를 주었습니다.", Sender);
                 return true;
             }
             Sender.sendMessage(ChatColor.RED + "알 수 없는 아이템 입니다.");
@@ -135,12 +153,15 @@ public class Vegan implements CommandExecutor {
                 Sender.sendMessage(ChatColor.GREEN + "사용법 /" + Cmd + " show <player>");
                 return true;
             }
-            Player target = Bukkit.getPlayer(args[1]);
-            if(!Other.playerCheck(target)){
-                Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
-                return true;
+            OfflinePlayer target = Bukkit.getPlayer(args[1]);
+            if(!Other.playerCheck((Player) target)){
+                target = Other.getOfflinePlayer(args[1]);
+                if(target == null) {
+                    Sender.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
+                    return true;
+                }
             }
-            Sender.sendMessage(ChatColor.AQUA + target.getName() + "에 비건수치 : " + config.getInt("Player.vegan." + target.getUniqueId()));
+            Sender.sendMessage(Prefix.getPrefix(target) + target.getName() + ChatColor.AQUA + "의 비건수치 : " + config.getInt("Player.vegan." + target.getUniqueId()));
             int vegancancel = config.getInt("Player.vegancancel." + target.getUniqueId());
             if(vegancancel != 0){
                 int M = vegancancel / 60;
